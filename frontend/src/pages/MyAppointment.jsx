@@ -62,9 +62,11 @@ export const MyAppointments = () => {
 
     const paymentRazorpay = async (appointmentId) => {
         try {
-            const { data } = await axios.post(backendUrl, + '/api/user/payment-razorpay', { appointmentId }, { headers: { token } });
+            const { data } = await axios.post(backendUrl + '/api/user/payment-razorpay',
+                { appointmentId }, { headers: { token } });
             if (data.success) {
-                initPay(data.order);
+                // initPay(data.order);
+                console.log(data.order);
             }
         } catch (error) {
             console.log(error);
@@ -105,20 +107,22 @@ export const MyAppointments = () => {
                             </div>
                             <div></div>
                             <div className="flex flex-col gap-2 justify-end">
-                                {!item.cancelled && <button onClick={() => paymentRazorpay(item._id)} className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-300">Pay Online</button>}
+                                {!item.cancelled && item.payment && !item.isCompleted && <button onClick={() => paymentRazorpay(item._id)} className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-300">Paid</button>}
+                                {!item.cancelled && !item.payment && !item.isCompleted && <button onClick={() => paymentRazorpay(item._id)} className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-300">Pay Online</button>}
                                 {
-                                    !item.cancelled &&
+                                    !item.cancelled && !item.isCompleted &&
                                     <button onClick={() => cancleAppointment(item._id)} className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded  hover:bg-red-500 hover:text-white transition-all duration-300">Cancel appointment</button>
                                 }
                                 {
-                                    item.cancelled &&
+                                    item.cancelled && !item.isCompleted &&
                                     <button className="sm:min-w-48 py-2 border border-red-500 rounded text-red-500">Appointment cancelled</button>
                                 }
+                                {item.isCompleted && <button className="sm:min-w-48 py-2 border border-green-500 rounded text-green-500">Completed</button>}
                             </div>
                         </div>
                     ))
                 }
             </div>
-        </div>
+        </div >
     </>
 }

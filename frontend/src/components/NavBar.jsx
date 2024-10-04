@@ -39,6 +39,10 @@ export const NavBar = () => {
                     <li className='py-1'>Contact</li>
                     <hr className='border-nonr outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
                 </NavLink>
+                <NavLink to='http://localhost:5174/'>
+                    {/* <li className="text-xs inline border border-gray-500 px-2 rounded-full">Admin</li> */}
+                    <li className="text-[12px] py-0.5 border border-gray-400 px-3 rounded-full">Admin</li>
+                </NavLink>
             </ul>
             <div className='flex items-center gap-4'>
                 {
